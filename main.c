@@ -1,63 +1,46 @@
 #include "main.h"
 
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	char **args;
-	char *buffer = NULL;
-	char errorMessage[100];
-	int i, l = 0;
+	char *input = NULL, *check = NULL;
+	int i, l;
 	size_t n = 0;
-	pid_t pid;
 
-	args = (char **)malloc(sizeof(char *) * argc);
-	if (args == NULL)
-		return (1);
-	for (i = 1; i < argc; i++)
-		args[i - 1] = argv[i];
-
-	args[argc - 1] = NULL;
 	printf("\n");
 	while (1)
 	{
-		l = 0, n = 0;
-		printf("$ ");
-		getline(&buffer, &n, stdin);
-
-		while (buffer[i])
-			i++;
-		if (buffer[i - 1] == '\n')
-			buffer[i - 1] = ' ';
-
-		for (i = 0; buffer[i]; i++)
-			if (buffer[i] == ' ')
+		l = 0;
+		if (isatty(0) == 1)
+			printf("$ ");
+		getline(&input, &n, stdin);
+		if (strcmp(input, "\n") == 0)
+			continue;
+		for (i = 0; input[i]; i++)
+			if (input[i] == ' ')
 				l++;
-
-		free(args);
+		if (input[i - 1] == '\n')
+			input[i - 1] = '\0';
 		args = (char **)malloc(sizeof(char *) * (l + 1));
-		args[0] = strtok(buffer, " ");
-		for (i = 1; i < l; i++)
+		if (args == NULL)
+			return (1);
+		args[0] = strtok(input, " ");
+		for (i = 1; i < l + 1; i++)
 			args[i] = strtok(NULL, " ");
-		args[l] = NULL;
+		args[l + 1] = NULL;
 		if (strcmp(args[0], "exit") == 0)
 			exit(1);
-		pid = fork();
-		if (pid == 0)
+		if (strcmp(args[0], "env") == 0)
+			printEnv();
+		else if (_which(args[0]))
 		{
-			execvp(args[0], args);
-			sprintf(errorMessage, "%s: not found", args[0]);
-			perror(errorMessage);
-			return (1);
+			check = _which(args[0]);
+			args[0] = check;
+			execCom(args);
 		}
-		else if (pid > 0)
-		{
-			wait(NULL);
-			continue;
-		}
-		else
-		{
-			perror("error");
-		}
+		free(args);
+		continue;
 	}
 	return (0);
 }
