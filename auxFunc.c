@@ -2,16 +2,26 @@
 
 int execCom(char **args)
 {
-	int status = 0;
+	int status;
+	pid_t pid;
 
-	if (fork() == 0)
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		return (-1);
+	}
+	else if (pid == 0)
 	{
 		execve(args[0], args, environ);
-		perror("error pa");
+		perror("execve");
+		exit(EXIT_FAILURE);
 	}
 	else
-		wait(&status);
-	return (WEXITSTATUS(status));
+	{
+		waitpid(pid, &status, 0);
+		return (WEXITSTATUS(status));
+	}
 }
 
 char *_getenv(char *string);
@@ -24,10 +34,7 @@ char *_which(char *args)
 
 	list = _getenv("PATH");
 	if (strchr(args, '/'))
-	{
-		free(list);
 		return (args);
-	}
 	path = strtok(list, ":");
 
 	while (path)
@@ -41,7 +48,6 @@ char *_which(char *args)
 		free(comm);
 		path = strtok(NULL, ":");
 	}
-	free(comm);
 	return (NULL);
 }
 
@@ -70,4 +76,34 @@ void printEnv(void)
 
 	for (i = 0; environ[i]; i++)
 		printf("%s\n", environ[i]);
+}
+int auxCase(char **args)
+{
+	char *home, *oldpwd, cwd[1024];
+
+	oldpwd = _getenv("PWD");
+	home = _getenv("HOME");
+	if (strcmp(args[0], "exit") == 0)
+		exit(0);
+	else if (strcmp(args[0], "env") == 0)
+	{
+		printEnv();
+		return (0);
+	}
+	else if (strcmp(args[0], "cd") == 0)
+	{
+		if (args[1] == NULL)
+		{
+			chdir(home);
+			args[1] = home;
+		}
+		else if (chdir(args[1]) != 0)
+			perror("No exist this path");
+		if (getcwd(cwd, sizeof(cwd)) == NULL)
+			perror("Error");
+		_setenv("PWD", cwd);
+		_setenv("OLDPWD", oldpwd);
+		return (0);
+	}
+	return (1);
 }
