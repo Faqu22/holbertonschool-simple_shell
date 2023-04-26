@@ -41,7 +41,7 @@ int main(void)
 			}
 			else
 				perror("ERROR");
-			if (issaty(0) != 1)
+			if (isatty(0) != 1)
 				break;
 			free(args);
 			continue;
