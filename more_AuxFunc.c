@@ -3,8 +3,8 @@
 
 int _setenv(char *nombre, char *valor)
 {
-	int i;
-	char *env;
+	int i = 0;
+	char *env = NULL;
 
 	for (i = 0; environ[i]; i++)
 	{
@@ -13,14 +13,16 @@ int _setenv(char *nombre, char *valor)
 		if (strcmp(env, nombre) == 0)
 		{
 			environ[i] = NULL;
-			environ[i] = malloc(sizeof(char *) * (strlen(valor) + strlen(nombre) + 1));
+			environ[i] = malloc(strlen(valor) + strlen(nombre) + 2);
 			if (environ[i] == NULL)
 				return (1);
-			environ[i] = env;
+			strcat(environ[i], nombre);
 			strcat(environ[i], "=");
 			strcat(environ[i], valor);
+			free(env);
 			return (0);
 		}
+		free(env);
 	}
 	return (1);
 }
@@ -36,9 +38,43 @@ void contr(int a)
 
 void free_array(char **array)
 {
-	int i;
+	int i = 0;
 
 	for (i = 0; array[i]; i++)
 		free(array[i]);
 	free(array);
 }
+
+char **cutString(char *input)
+{
+	int len = 0;
+	char **cutStr = NULL, *copy_input = NULL, *token = NULL;
+
+	if (input == NULL)
+		return (NULL);
+
+	copy_input = malloc(strlen(input) + 1);
+	strcpy(copy_input, input);
+	token = strtok(copy_input, " \n\t");
+	for (len = 0; token; len++)
+		token = strtok(NULL, " \n\t");
+	free(copy_input);
+	free(token);
+	cutStr = (char **)malloc(sizeof(char *) * (len + 1));
+	if (cutStr == NULL)
+		return (NULL);
+
+	copy_input = malloc(strlen(input) + 1);
+	strcpy(copy_input, input);
+	token = strtok(copy_input, " \n\t");
+	for (len = 0; token; len++)
+	{
+		cutStr[len] = strdup(token);
+		token = strtok(NULL, " \n\t");
+	}
+	cutStr[len] = NULL;
+	free(copy_input);
+	free(token);
+	return (cutStr);
+}
+

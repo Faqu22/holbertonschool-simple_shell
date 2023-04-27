@@ -14,6 +14,7 @@ extern char **environ;
 int _setenv(char * nombre ,char * valor);
 int auxCase(char **args);
 int execCom(char **args);
+char **cutString(char *input);
 void printEnv(void);
 void contr(int a);
 void free_array(char **array);

@@ -2,8 +2,8 @@
 
 int execCom(char **args)
 {
-	int status;
-	pid_t pid;
+	int status = 0;
+	pid_t pid = 0;
 
 	pid = fork();
 	if (pid == -1)
@@ -28,63 +28,84 @@ char *_getenv(char *string);
 
 char *_which(char *args)
 {
-	char *list;
-	char *comm;
-	char *path;
+	char *list = NULL;
+	char *comm = NULL;
+	char *path = NULL;
 
 	list = _getenv("PATH");
-	if (strchr(args, '/'))
-		return (args);
+	if (list == NULL)
+		return (NULL);
 	path = strtok(list, ":");
-
+	if (strchr(args, '/') && access(args, F_OK) == 0)
+	{
+		free(path);
+		free(list);
+		return (args);
+	}
+	free(list);
 	while (path)
 	{
-		comm = malloc(sizeof(char *) * (strlen(path) + strlen(args) + 2));
+		comm = malloc(strlen(path) + strlen(args) + 2);
 		if (comm == NULL)
 			return (NULL);
 		sprintf(comm, "%s/%s", path, args);
 		if (access(comm, F_OK) == 0)
+		{
+			free(args);
 			return (comm);
-		free(comm);
+		}
 		path = strtok(NULL, ":");
+		free(comm);
 	}
+	if (list)
+		free(list);
+	if (path)
+		free(path);
 	return (NULL);
 }
 
 
 char *_getenv(char *string)
 {
-	int i;
-	char *cont;
+	int i = 0;
+	char *cont = NULL;
+	char *aux = NULL;
 
 	for (i = 0; environ[i]; i++)
 	{
-		cont = strdup(environ[i]);
+		cont = malloc(strlen(environ[i]) + 1);
+		strcpy(cont, environ[i]);
 		cont = strtok(cont, "=");
 		if (strcmp(string, cont) == 0)
 		{
-			cont = strtok(NULL, "=");
-			return (cont);
+			aux = strdup(strtok(NULL, "="));
+			free(cont);
+			return (aux);
 		}
+		free(cont);
 	}
 	return (NULL);
 }
 
 void printEnv(void)
 {
-	int i;
+	int i = 0;
 
 	for (i = 0; environ[i]; i++)
 		printf("%s\n", environ[i]);
 }
 int auxCase(char **args)
 {
-	char *home, *oldpwd, cwd[1024];
+	char *home = NULL, *oldpwd = NULL, *cwd = NULL;
+	size_t size = 1024;
 
-	oldpwd = _getenv("PWD");
-	home = _getenv("HOME");
-	if (strcmp(args[0], "exit") == 0)
+	if (strcmp(args[0], "\n") == 0)
+		return (0);
+	else if (strcmp(args[0], "exit") == 0)
+	{
+		free_array(args);
 		exit(0);
+	}
 	else if (strcmp(args[0], "env") == 0)
 	{
 		printEnv();
@@ -92,17 +113,24 @@ int auxCase(char **args)
 	}
 	else if (strcmp(args[0], "cd") == 0)
 	{
+		oldpwd = _getenv("PWD");
+		home = _getenv("HOME");
 		if (args[1] == NULL)
 		{
 			chdir(home);
-			args[1] = home;
 		}
 		else if (chdir(args[1]) != 0)
+		{
 			perror("No exist this path");
-		if (getcwd(cwd, sizeof(cwd)) == NULL)
-			perror("Error");
+			return (0);
+		}
+		cwd = malloc(strlen(getcwd(NULL, size)) + 1);
+		getcwd(cwd, size);
 		_setenv("PWD", cwd);
 		_setenv("OLDPWD", oldpwd);
+		free(home);
+		free(oldpwd);
+		free(cwd);
 		return (0);
 	}
 	return (1);

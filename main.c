@@ -3,46 +3,39 @@
 
 int main(void)
 {
-	char **args;
-	char *input = NULL, *check = NULL;
-	int i, l;
+	char **args = NULL, *input = NULL, *check = NULL;
 	size_t n = 0;
 
 		signal(SIGINT, contr);
 		while (1)
 		{
-			l = 0;
 			if (isatty(0) == 1)
 				printf("$ ");
 			getline(&input, &n, stdin);
-			if (strcmp(input, "\n") == 0)
-				continue;
-			for (i = 0; input[i]; i++)
-				if (input[i] == '\n' || input[i] == '\t' || input[i] == ' ')
-				{
-					input[i] = ' ';
-					l++;
-				}
-			input[i - 1] = '\0';
-			args = (char **)malloc(sizeof(char *) * l);
-			if (args == NULL)
-				return (1);
-			args[0] = strtok(input, " ");
-			for (i = 1; i < l; i++)
-				args[i] = strtok(NULL, " ");
-			args[l] = NULL;
+			args = cutString(input);
+			printf("(auxCase I)\n");
 			if (auxCase(args) == 0)
-				;
-			else if (_which(args[0]))
-			{
-				check = _which(args[0]);
-				args[0] = check;
-				execCom(args);
-			}
+				printf("(auxCase 0)\n");
 			else
-				perror("ERROR");
-			free(args);
-			continue;
+			{
+				printf("(which I)\n");
+				check = _which(args[0]);
+				printf("(which O)\n");
+				if (check)
+				{
+					args[0] = strdup(check);
+					printf("[hola]\n");
+					execCom(args);
+					free(check);
+					printf("[funciono]\n");
+				}
+				else
+					perror("Error with which");
+			}
+			free_array(args);
+			printf("free O\n");
+			if (isatty(0) != 1)
+				break;
 		}
 	return (0);
 }
