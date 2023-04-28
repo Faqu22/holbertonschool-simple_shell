@@ -37,5 +37,6 @@ int main(void)
 			if (isatty(0) != 1)
 				break;
 		}
+		free(input);
 	return (0);
 }
