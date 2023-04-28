@@ -38,11 +38,11 @@ char *_which(char *args)
 	path = strtok(list, ":");
 	if (strchr(args, '/') && access(args, F_OK) == 0)
 	{
-		free(path);
 		free(list);
-		return (args);
+		list = strdup(args);
+		free(args);
+		return (list);
 	}
-	free(list);
 	while (path)
 	{
 		comm = malloc(strlen(path) + strlen(args) + 2);
@@ -51,6 +51,7 @@ char *_which(char *args)
 		sprintf(comm, "%s/%s", path, args);
 		if (access(comm, F_OK) == 0)
 		{
+			free(list);
 			free(args);
 			return (comm);
 		}
@@ -70,19 +71,21 @@ char *_getenv(char *string)
 	int i = 0;
 	char *cont = NULL;
 	char *aux = NULL;
+	char *dup = NULL;
 
 	for (i = 0; environ[i]; i++)
 	{
-		cont = malloc(strlen(environ[i]) + 1);
-		strcpy(cont, environ[i]);
-		cont = strtok(cont, "=");
+		dup = strdup(environ[i]);
+		cont = strtok(dup, "=");
 		if (strcmp(string, cont) == 0)
 		{
-			aux = strdup(strtok(NULL, "="));
-			free(cont);
+			cont = strtok(NULL, "=");
+			aux = malloc(strlen(cont) + 1);
+			strcpy(aux, cont);
+			free(dup);
 			return (aux);
 		}
-		free(cont);
+		free(dup);
 	}
 	return (NULL);
 }
@@ -101,11 +104,6 @@ int auxCase(char **args)
 
 	if (strcmp(args[0], "\n") == 0)
 		return (0);
-	else if (strcmp(args[0], "exit") == 0)
-	{
-		free_array(args);
-		exit(0);
-	}
 	else if (strcmp(args[0], "env") == 0)
 	{
 		printEnv();

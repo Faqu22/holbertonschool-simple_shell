@@ -13,6 +13,12 @@ int main(void)
 				printf("$ ");
 			getline(&input, &n, stdin);
 			args = cutString(input);
+			if (strcmp(args[0], "exit") == 0)
+			{
+				free(input);
+				free_array(args);
+				exit(0);
+			}
 			if (auxCase(args) == 0)
 				;
 			else
@@ -22,10 +28,10 @@ int main(void)
 				{
 					args[0] = strdup(check);
 					execCom(args);
-					free(check);
 				}
 				else
 					perror("Error with which");
+				free(check);
 			}
 			free_array(args);
 			if (isatty(0) != 1)

@@ -53,19 +53,16 @@ char **cutString(char *input)
 	if (input == NULL)
 		return (NULL);
 
-	copy_input = malloc(strlen(input) + 1);
-	strcpy(copy_input, input);
+	copy_input = strdup(input);
 	token = strtok(copy_input, " \n\t");
 	for (len = 0; token; len++)
 		token = strtok(NULL, " \n\t");
 	free(copy_input);
-	free(token);
 	cutStr = (char **)malloc(sizeof(char *) * (len + 1));
 	if (cutStr == NULL)
 		return (NULL);
 
-	copy_input = malloc(strlen(input) + 1);
-	strcpy(copy_input, input);
+	copy_input = strdup(input);
 	token = strtok(copy_input, " \n\t");
 	for (len = 0; token; len++)
 	{
@@ -74,7 +71,6 @@ char **cutString(char *input)
 	}
 	cutStr[len] = NULL;
 	free(copy_input);
-	free(token);
 	return (cutStr);
 }
 
