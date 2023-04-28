@@ -13,6 +13,8 @@ int main(void)
 				printf("$ ");
 			getline(&input, &n, stdin);
 			args = cutString(input);
+			if (args == NULL)
+				continue;
 			if (strcmp(args[0], "exit") == 0)
 			{
 				free(input);
