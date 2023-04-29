@@ -79,6 +79,11 @@ char *_getenv(char *string)
 		if (strcmp(string, cont) == 0)
 		{
 			cont = strtok(NULL, "=");
+			if (cont == NULL)
+			{
+				free(dup);
+				return (NULL);
+			}
 			aux = malloc(strlen(cont) + 1);
 			strcpy(aux, cont);
 			free(dup);
