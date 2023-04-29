@@ -13,16 +13,14 @@ int main(void)
 				printf("$ ");
 			getline(&input, &n, stdin);
 			args = cutString(input);
-			if (args == NULL)
-				continue;
-			if (strcmp(args[0], "exit") == 0)
+			if (args == NULL || auxCase(args) == 0)
+				;
+			else if (strcmp(args[0], "exit") == 0)
 			{
 				free(input);
 				free_array(args);
 				exit(0);
 			}
-			if (auxCase(args) == 0)
-				;
 			else
 			{
 				check = _which(args[0]);
