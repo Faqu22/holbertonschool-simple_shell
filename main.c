@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * main - main loop of simple shell
+ * @av: takes the parameters of the program
+ * @ac: the number of parameters
+ * Return: status
+ */
 
 int main(int __attribute__((unused)) ac, char **av)
 {

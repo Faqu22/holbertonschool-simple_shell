@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * _setenv - sets the value of an environmental variable
+ * @nombre: the name of the environmental variable
+ * @valor: the value to set
+ * Return: 0 if it works, 1 if not
+ */
 
 int _setenv(char *nombre, char *valor)
 {
@@ -26,6 +32,12 @@ int _setenv(char *nombre, char *valor)
 	}
 	return (1);
 }
+
+/**
+ * contr - handling of signals
+ * @a: int
+ */
+
 void contr(int a)
 {
 	signal(a, SIG_IGN);
@@ -35,6 +47,11 @@ void contr(int a)
 	fflush(stdout);
 	signal(a, contr);
 }
+
+/**
+ * free_array - free an array of two dimensions
+ * @array: the array to free
+ */
 
 void free_array(char **array)
 {
@@ -46,6 +63,12 @@ void free_array(char **array)
 		free(array[i]);
 	free(array);
 }
+
+/**
+ * cutString - cuts the string, dividing each word separated
+ * @input: the string to cut
+ * Return: the cutted string if it works, else NULL
+ */
 
 char **cutString(char *input)
 {
@@ -80,4 +103,3 @@ char **cutString(char *input)
 	free(copy_input);
 	return (cutStr);
 }
-

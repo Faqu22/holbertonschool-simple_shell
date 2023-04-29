@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * execCom - makes a fork and executes the command from the input
+ * @args: the array that contains the command
+ * Return: status
+ */
+
 int execCom(char **args)
 {
 	int status = 0;
@@ -25,6 +31,12 @@ int execCom(char **args)
 }
 
 char *_getenv(char *string);
+
+/**
+ * _which - checks if the command exist
+ * @args: a string with the command
+ * Return: if exists the full path of that command, else NULL
+ */
 
 char *_which(char *args)
 {
@@ -64,6 +76,11 @@ char *_which(char *args)
 	return (NULL);
 }
 
+/**
+ * _getenv - looks for an enviornmental variable
+ * @string: a string with the command
+ * Return: the value of the variable if exist, else NULL
+ */
 
 char *_getenv(char *string)
 {
@@ -94,6 +111,10 @@ char *_getenv(char *string)
 	return (NULL);
 }
 
+/**
+ * printEnv - prints the env environmental
+ */
+
 void printEnv(void)
 {
 	int i = 0;
@@ -101,6 +122,13 @@ void printEnv(void)
 	for (i = 0; environ[i]; i++)
 		printf("%s\n", environ[i]);
 }
+
+/**
+ * auxCase - checks command for special cases, executes if true
+ * @args: the array with the commands
+ * Return: 0 if it a special case, 1 if not
+ */
+
 int auxCase(char **args)
 {
 	char *home = NULL, *oldpwd = NULL, *cwd = NULL;
