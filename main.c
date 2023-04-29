@@ -34,7 +34,7 @@ int main(int __attribute__((unused)) ac, char **av)
 					status = 127;
 					error = malloc(strlen(av[0]) + strlen(args[0]) + 18);
 					sprintf(error, "%s: 1: %s: not found\n", av[0], args[0]);
-					perror(error);
+					fprintf(stderr, "%s", error);
 					free(error);
 				}
 				free(check);
