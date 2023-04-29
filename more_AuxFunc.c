@@ -58,7 +58,10 @@ char **cutString(char *input)
 	copy_input = strdup(input);
 	token = strtok(copy_input, " \n\t");
 	if (token == NULL)
+	{
+		free(copy_input);
 		return (NULL);
+	}
 	for (len = 0; token; len++)
 		token = strtok(NULL, " \n\t");
 	free(copy_input);
