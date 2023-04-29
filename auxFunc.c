@@ -32,17 +32,16 @@ char *_which(char *args)
 	char *comm = NULL;
 	char *path = NULL;
 
-	list = _getenv("PATH");
-	if (list == NULL)
-		return (NULL);
-	path = strtok(list, ":");
 	if (strchr(args, '/') && access(args, F_OK) == 0)
 	{
-		free(list);
 		list = strdup(args);
 		free(args);
 		return (list);
 	}
+	list = _getenv("PATH");
+	if (list == NULL)
+		return (NULL);
+	path = strtok(list, ":");
 	while (path)
 	{
 		comm = malloc(strlen(path) + strlen(args) + 2);
