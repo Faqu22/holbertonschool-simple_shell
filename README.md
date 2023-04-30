@@ -127,3 +127,7 @@ With the shell in this state you can already type your commands
 example:
 
 ``$ ls ``
+
+#Flowchart
+
+![flowchart](https://drive.google.com/file/d/1fJgNcwKTJUwzqqt_AGeMU65VlkEYC-GN/view?usp=share_link)
