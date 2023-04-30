@@ -1,6 +1,27 @@
 # Simple-Shell
 The objective of this proyect is to make simple shell
 
+#Requirements
+
+General
+	Allowed editors: vi, vim, emacs
+
+	All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89
+
+	All your files should end with a new line
+
+	A README.md file, at the root of the folder of the project is mandatory
+
+	Your code should use the Betty style. It will be checked using betty-style.pl and betty-doc.pl
+
+	Your shell should not have any memory leaks
+
+	No more than 5 functions per file
+
+	All your header files should be include guarded
+
+	Use system calls only when you need to
+
 # List of allowed functions and system calls
 
 	all functions from strings.h
@@ -84,7 +105,7 @@ First clone this repository
 
 Compile it
 
-`` gcc *.c -o "NAME" ``  "NAME" the name you want the shell to have
+`` gcc *.c -o hsh ``
 # Usage
 
 The shell can be used either in interactive mode
@@ -117,7 +138,7 @@ $
 ```
 To use it in interactive mode you have to run the shell:
 
-`` ./"NAME" ``
+`` ./"hsh" ``
 
 Now in your terminal you see this:
 
@@ -131,3 +152,17 @@ example:
 #Flowchart
 
 ![flowchart](Flowchar.jpg)
+
+#List of files
+
+Documentations: README.md, AUTHORS, man_1_simple_shell.
+
+Shell: main.c
+
+Auxiliar functions: auxFunc.h, more_AuxFunc.c
+
+#Authors
+
+Facundo Alvarez
+
+Federico Heuer
