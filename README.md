@@ -149,11 +149,11 @@ example:
 
 ``$ ls ``
 
-#Flowchart
+# Flowchart
 
 ![flowchart](Flowchar.jpg)
 
-#List of files
+# List of files
 
 Documentations: README.md, AUTHORS, man_1_simple_shell.
 
@@ -161,7 +161,7 @@ Shell: main.c
 
 Auxiliar functions: auxFunc.h, more_AuxFunc.c
 
-#Authors
+# Authors
 
 Facundo Alvarez
 
