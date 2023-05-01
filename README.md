@@ -190,6 +190,7 @@ Auxiliar functions: auxFunc.h, more_AuxFunc.c
 
 # Authors
 
-Facundo Alvarez
+* <h6>Facundo Alvarez <a href="https://github.com/Faqu22"><img align="center" alt="github" src="https://i.imgur.com/hGwhvpO.png" height="30"/></a>
+* <h6>Federico Heuer <a href="https://github.com/RaptorZ98"><img align="center" alt="github" src="https://i.imgur.com/hGwhvpO.png" height="30"/></a>
 
-Federico Heuer
+<hr>
