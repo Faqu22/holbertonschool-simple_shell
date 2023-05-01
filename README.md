@@ -1,9 +1,14 @@
 # Simple-Shell
 The objective of this proyect is to make simple shell
 
-#Requirements
+# Description
+A Unix-like operating system uses a command line interpreter called a Unix shell, which serves as a user interface. This shell can function as both a scripting and interactive command language, and is utilized by the operating system to manage system execution through shell scripts.
+# Requirements
+<details open>
+<summary> <strong> General </strong> </summary>
 
-General
+<br>
+
 	Allowed editors: vi, vim, emacs
 
 	All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89
@@ -22,7 +27,14 @@ General
 
 	Use system calls only when you need to
 
-# List of allowed functions and system calls
+</details>
+
+
+## List of allowed functions and system calls
+<details open>
+<summary> <strong> Functions</strong> </summary>
+
+<br>
 
 	all functions from strings.h
 
@@ -97,6 +109,7 @@ General
 	wait4 (man 2 wait4)
 
 	write (man 2 write)
+</details>
 
 # Instalation
 First clone this repository
@@ -108,14 +121,18 @@ Compile it
 `` gcc *.c -o hsh ``
 # Usage
 
-The shell can be used either in interactive mode
+<details open>
+<summary> <strong> Examples </strong> </summary>
+<br>
 
+The shell can be used either in interactive mode
 ```shell
 
 $ ./hsh
 ($) /bin/ls
 hsh main.c shell.c
-($)
+($) ls
+hsh main.c shell.c
 ($) exit
 $
 
@@ -135,7 +152,15 @@ hsh main.c shell.c test_ls_2
 hsh main.c shell.c test_ls_2
 $
 
+
 ```
+
+</details>
+
+<details open>
+<summary> <strong> Instructions </strong> </summary>
+<br>
+
 To use it in interactive mode you have to run the shell:
 
 `` ./"hsh" ``
@@ -148,6 +173,8 @@ With the shell in this state you can already type your commands
 example:
 
 ``$ ls ``
+
+</details>
 
 # Flowchart
 
